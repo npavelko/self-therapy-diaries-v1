@@ -8,16 +8,11 @@ class ShowEditEntryScreen extends StatelessWidget {
   static const routeName = '/show-edit-entry-route';
   late final Function function;
 
-  FirebaseService firebaseService = GetIt.instance.get<FirebaseService>();
-
-  final String _collectionPath = 'diaries/puPc9k88E83sJRPx7lXc/notes';
   String _newTextEntry = '';
   String _newTitleEntry = '';
 
   String _nonChangedEntryTitle = '';
   String _nonChangedEntry = '';
-
-  //ShowEditEntryScreen(this.function);
 
   String _formatter(DateTime dateTime) {
     DateFormat dateFormat = DateFormat.yMEd();
@@ -35,16 +30,10 @@ class ShowEditEntryScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       body: StreamBuilder(
-          stream: firebaseService.getNoteById(_idNote, _diaryTitle),
-          /* FirebaseFirestore.instance // get Id
-              .collection(_collectionPath)
-              .doc(_idNote)
-              .snapshots() ,*/
+          stream: GetIt.instance
+              .get<FirebaseService>()
+              .getEntryById(_idNote, _diaryTitle),
           builder: (ctx, snapshot) {
-            if (!snapshot.hasData) {
-              return const Text("no data");
-            }
-
             var dataUser = snapshot.data as DocumentSnapshot;
             String existEntry = dataUser.get('text');
             String existEntryTitle = dataUser.get('title');
@@ -67,7 +56,7 @@ class ShowEditEntryScreen extends StatelessWidget {
                       ),
                       const Padding(padding: EdgeInsets.only(bottom: 8)),
                       Text(
-                        _formatter(DateTime.now()), // отфоратировать дату
+                        _formatter(DateTime.now()),
                         style: const TextStyle(color: Colors.grey),
                       ),
                       Divider(
@@ -102,14 +91,13 @@ class ShowEditEntryScreen extends StatelessWidget {
           if (_newTextEntry.isEmpty) {
             _newTextEntry = _nonChangedEntry;
           }
-
-          firebaseService.updateEnrty(
-            _idNote,
-            _newTitleEntry,
-            _newTextEntry,
-            _formatter(DateTime.now()),
-            _diaryTitle,
-          );
+          GetIt.instance.get<FirebaseService>().updateEnrty(
+                _idNote,
+                _newTitleEntry,
+                _newTextEntry,
+                _formatter(DateTime.now()),
+                _diaryTitle,
+              );
           Navigator.of(context).pop(true);
         },
       ),

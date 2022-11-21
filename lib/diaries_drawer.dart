@@ -1,10 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:self_therapy_diaries/dummy_data.dart';
-import 'package:self_therapy_diaries/screens/diaries_screen.dart';
+import 'package:get_it/get_it.dart';
+
+import 'package:self_therapy_diaries/model/diaries.dart';
 import 'package:self_therapy_diaries/screens/entries_list_screen.dart';
+import 'package:self_therapy_diaries/service/firebase_service.dart';
 
 class DiariesDrawer extends StatelessWidget {
-  // const ({ Key? key }) : super(key: key);
+  final String _name;
+
+  DiariesDrawer(this._name);
+
+  void logout() {
+    GetIt.instance.get<FirebaseService>().singOut();
+  }
+
+  Column _createDiariesNavigation(
+      BuildContext ctx, String diaryTitle, String diaryId, IconData icon) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ListTile(
+          title: Text(diaryTitle),
+          onTap: () => Navigator.of(ctx)
+              .pushReplacementNamed(EntriesListScreen.routeName, arguments: {
+            'id': diaryId,
+            'diaryTitle': diaryTitle,
+          }),
+          leading: Icon(icon),
+        ),
+        const Divider(),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,52 +39,32 @@ class DiariesDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            child: Text('All diaries'),
-            decoration: BoxDecoration(
+          DrawerHeader(
+            child: Text(
+              _name,
+              style: const TextStyle(
+                fontSize: 24,
+              ),
+            ),
+            decoration: const BoxDecoration(
               color: Color.fromARGB(255, 230, 81, 36),
             ),
           ),
-          ListTile(
-            title: Text(DIARIES[0].title),
-            onTap: () => Navigator.of(context)
-                .pushNamed(EntriesListScreen.routeName, arguments: {
-              'id': DIARIES[0].id,
-              'diaryTitle': DIARIES[0].title,
-            }),
-            /* DiaryItem(DUMMY_DIARIES[0].id, DUMMY_DIARIES[0].title,
-                DUMMY_DIARIES[0].image), */
-          ),
-          ListTile(
-            title: Text(DIARIES[1].title),
-            onTap: () => Navigator.of(context)
-                .pushNamed(EntriesListScreen.routeName, arguments: {
-              'id': DIARIES[1].id,
-              'diaryTitle': DIARIES[1].title,
-            }),
-          ),
-          ListTile(
-            title: Text(DIARIES[2].title),
-            onTap: () => Navigator.of(context)
-                .pushNamed(EntriesListScreen.routeName, arguments: {
-              'id': DIARIES[2].id,
-              'diaryTitle': DIARIES[2].title,
-            }),
-          ),
-          ListTile(
-            title: Text(DIARIES[3].title),
-            onTap: () => Navigator.of(context)
-                .pushNamed(EntriesListScreen.routeName, arguments: {
-              'id': DIARIES[3].id,
-              'diaryTitle': DIARIES[3].title,
-            }),
-          ),
-          ListTile(
-            title: Text('Main page'),
-            onTap: () => Navigator.of(context).pushNamed(
-              DiariesScreen.routeName,
+          SizedBox(
+            height: 300,
+            child: ListView.builder(
+              itemCount: diaries.length,
+              itemBuilder: (ctx, index) => _createDiariesNavigation(context,
+                  diaries[index].title, diaries[index].id, diaries[index].icon),
             ),
-          )
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text('Logout'),
+            leading: const Icon(Icons.logout),
+            onTap: () => logout(),
+          ),
+          const Divider(),
         ],
       ),
     );

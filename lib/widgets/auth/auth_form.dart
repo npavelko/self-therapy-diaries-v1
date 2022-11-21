@@ -50,10 +50,6 @@ class _AuthFormState extends State<AuthForm> {
         _isLogin,
         context,
       );
-      // print(_userEmail);
-      // print(_userPassword);
-      // print(_userName);
-      // print(_userLastname);
     }
   }
 
@@ -79,9 +75,9 @@ class _AuthFormState extends State<AuthForm> {
                         const InputDecoration(labelText: 'Email address'),
                     validator: (value) {
                       bool isEmailValid = EmailValidator.validate(value!);
-                      print(value);
+                      //print(value);
                       if (!isEmailValid) {
-                        print(isEmailValid);
+                        //print(isEmailValid);
                         return 'Please enter a valid email address';
                       }
                       return null;

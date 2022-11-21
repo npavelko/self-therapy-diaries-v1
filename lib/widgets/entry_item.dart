@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:self_therapy_diaries/screens/show_edit_entry_screen.dart';
+import 'package:self_therapy_diaries/service/firebase_service.dart';
 
 class EntryItem extends StatelessWidget {
   final Function functionDelete;
-  //final Function functionUpdate;
-
   final String _idNote;
   final String _noteTitle;
   final String _date;
   final String _note;
   final int _index;
-  final String diaryTitle; // for test
+  final String _diaryTitle;
 
   EntryItem(
     this._idNote,
@@ -18,9 +18,8 @@ class EntryItem extends StatelessWidget {
     this._date,
     this._note,
     this._index,
-    this.diaryTitle,
+    this._diaryTitle,
     this.functionDelete,
-    // this.functionUpdate,
   );
 
   @override
@@ -32,8 +31,7 @@ class EntryItem extends StatelessWidget {
             'index': _index.toString(),
             'titleNote': _noteTitle,
             'idNote': _idNote,
-            'diaryTitle': diaryTitle,
-            //'function': functionUpdate,
+            'diaryTitle': _diaryTitle,
           }),
       onLongPress: (() => showDialog(
           context: context,
@@ -51,13 +49,14 @@ class EntryItem extends StatelessWidget {
                   TextButton(
                     child: const Text('Yes'),
                     onPressed: () {
-                      functionDelete(_idNote);
+                      functionDelete(_idNote, _diaryTitle);
                       Navigator.of(ctx).pop(true);
                     },
                   ),
                 ],
               ))),
       child: ClipRRect(
+        //винести в оремий класс?
         borderRadius: BorderRadius.circular(15),
         child: Card(
           margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),

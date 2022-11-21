@@ -12,8 +12,6 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   var _isLoading = false;
   String _userId = '';
-  final FirebaseService _firebaseService =
-      GetIt.instance.get<FirebaseService>();
 
   void _submitAuthForm(
     String email,
@@ -29,12 +27,16 @@ class _AuthScreenState extends State<AuthScreen> {
         _isLoading = true;
       });
       if (isLoginMode) {
-        _userId = await _firebaseService.signIn(email, password);
+        _userId =
+            await GetIt.instance.get<FirebaseService>().signIn(email, password);
       } else {
-        _userId = await _firebaseService.createUser(email, password);
+        _userId = await GetIt.instance
+            .get<FirebaseService>()
+            .createUser(email, password);
+        await GetIt.instance
+            .get<FirebaseService>()
+            .setCollectionUser(userName, userLastname, email, _userId);
       }
-      await _firebaseService.setCollectionUser(
-          userName, userLastname, email, _userId);
     } on FirebaseAuthException catch (error) {
       //  catches only PlatformException errors, FirebaseAuth(wrong email, password etc)
       var messege = 'Error occurred, please check your credentials';
