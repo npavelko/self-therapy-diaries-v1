@@ -11,8 +11,6 @@ class AddNewEntrySceeen extends StatefulWidget {
 }
 
 class _AddNewEntrySceeenState extends State<AddNewEntrySceeen> {
-  /*  final FirebaseService _firebaseService =
-      GetIt.instance.get<FirebaseService>(); */
   final _date = DateTime.now();
   var _title = '';
   var _entryText = '';
@@ -26,6 +24,7 @@ class _AddNewEntrySceeenState extends State<AddNewEntrySceeen> {
   void _saveNote(String diaryId, String diaryTitle, String noteTitle,
       DateTime date, String input) {
     final String formattedDate = _formatter(date);
+
     GetIt.instance.get<FirebaseService>().saveEntry(
           diaryId,
           diaryTitle,

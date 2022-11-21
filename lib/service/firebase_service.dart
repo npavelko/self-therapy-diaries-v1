@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:self_therapy_diaries/model/user_of_diaries.dart';
+import 'package:intl/intl.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
@@ -67,7 +68,7 @@ class FirebaseService {
     getCurrentUserId();
     DocumentReference documentReferencer =
         _collectionDiaries.doc(diaryTitle).collection(_collectionNotes).doc();
-
+    var dateForSort = formatter(DateTime.now());
     Map<String, dynamic> data = <String, dynamic>{
       'author': _currentUserID,
       'diaryId': diaryId,
@@ -75,8 +76,16 @@ class FirebaseService {
       'title': noteTitle,
       'date': formattedDate,
       'text': input,
+      // 'timestamp': DateTime.now().millisecondsSinceEpoch,
+      'timestamp': dateForSort,
     };
     documentReferencer.set(data);
+  }
+
+  String formatter(DateTime dateTime) {
+    DateFormat dateFormat = DateFormat('yyyyMMddhhmmss');
+    String formatted = dateFormat.format(dateTime);
+    return formatted;
   }
 
   Future<void> updateEnrty(String idNote, String noteTitle, String newInput,
@@ -112,6 +121,7 @@ class FirebaseService {
     return notesItemCollection
         .where('diaryId', isEqualTo: selectedDiaryId)
         .where('author', isEqualTo: _currentUserID)
+        .orderBy('timestamp', descending: true)
         .snapshots();
   }
 
