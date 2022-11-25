@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:self_therapy_diaries/screens/show_edit_entry_screen.dart';
-import 'package:self_therapy_diaries/service/firebase_service.dart';
 
 class EntryItem extends StatelessWidget {
   final Function functionDelete;
@@ -28,8 +26,8 @@ class EntryItem extends StatelessWidget {
       //key: ValueKey(_idNote),
       onTap: () => Navigator.pushNamed(context, ShowEditEntryScreen.routeName,
           arguments: {
-            'index': _index.toString(),
-            'titleNote': _noteTitle,
+            'index': _index.toString(), //?
+            'titleNote': _noteTitle, //rename entryTitle
             'idNote': _idNote,
             'diaryTitle': _diaryTitle,
           }),

@@ -3,4 +3,5 @@
 class UserOfDiaries {
   static String name = '';
   static String lastname = '';
+  static String email = '';
 }

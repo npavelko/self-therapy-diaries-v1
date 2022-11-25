@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:self_therapy_diaries/model/user_of_diaries.dart';
@@ -7,8 +9,8 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
 class FirebaseService {
-  static String userName = '';
-  static String userLastName = '';
+  //static String userName = '';
+  //static String userLastName = '';
   String? _currentUserID = '';
 
   final String _collectionNotes = 'notes';
@@ -16,6 +18,17 @@ class FirebaseService {
       _firebaseFirestore.collection('users');
   final CollectionReference _collectionDiaries =
       _firebaseFirestore.collection('diaries');
+
+  Future<String> createUser(String email, String password, String username,
+      String userLastname) async {
+    UserCredential result = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
+    User? user = result.user;
+    user!.updateDisplayName(username + ' ' + userLastname);
+    _currentUserID = user.uid;
+
+    return user.uid;
+  }
 
   Future<String> signIn(String email, String password) async {
     UserCredential result = await _firebaseAuth.signInWithEmailAndPassword(
@@ -25,13 +38,29 @@ class FirebaseService {
     return user.uid;
   }
 
-  Future<String> createUser(String email, String password) async {
-    UserCredential result = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
-    User? user = result.user;
-    _currentUserID = user!.uid;
+  String? getUserEmail() {
+    return _firebaseAuth.currentUser!.email;
+  }
 
-    return user.uid;
+  String? getUserDisplayName() {
+    return _firebaseAuth.currentUser!.displayName;
+  }
+
+  void changeUserEmail(String email) async {
+    Map<String, String> data = {'email': email};
+    _collectionUsers.doc(_currentUserID).update(data);
+    User? user = _firebaseAuth.currentUser;
+    user!.updateEmail(email);
+  }
+
+  void changeUserName(String name) async {
+    Map<String, String> data = {'username': name};
+    _collectionUsers.doc(_currentUserID).update(data);
+  }
+
+  void changeUserLastname(String lastname) async {
+    Map<String, String> data = {'userLastname': lastname};
+    _collectionUsers.doc(_currentUserID).update(data);
   }
 
   Future<void> setCollectionUser(
@@ -47,15 +76,16 @@ class FirebaseService {
     _currentUserID = _firebaseAuth.currentUser!.uid;
   }
 
-  Future<String> getUserNameAndLastname() async {
+  void getUserAccountData() async {
     Map<String, dynamic> userMapData = {};
     getCurrentUserId();
     await _collectionUsers.doc(_currentUserID).get().then((value) {
       userMapData = value.data() as Map<String, dynamic>;
       UserOfDiaries.name = userMapData['username'];
       UserOfDiaries.lastname = userMapData['userLastname'];
+      UserOfDiaries.email = userMapData['email'];
     });
-    return UserOfDiaries.name + ' ' + UserOfDiaries.lastname;
+    //return UserOfDiaries.name + ' ' + UserOfDiaries.lastname;
   }
 
   Future<void> saveEntry(
@@ -76,7 +106,6 @@ class FirebaseService {
       'title': noteTitle,
       'date': formattedDate,
       'text': input,
-      // 'timestamp': DateTime.now().millisecondsSinceEpoch,
       'timestamp': dateForSort,
     };
     documentReferencer.set(data);
@@ -133,9 +162,7 @@ class FirebaseService {
         .delete();
   }
 
-  Future<void> singOut() async {
-    UserOfDiaries.name = '';
-    UserOfDiaries.lastname = '';
-    await _firebaseAuth.signOut();
+  void singOut() {
+    _firebaseAuth.signOut();
   }
 }

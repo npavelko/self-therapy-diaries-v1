@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:self_therapy_diaries/diaries_drawer.dart';
+import 'package:self_therapy_diaries/main.dart';
 import 'package:self_therapy_diaries/model/user_of_diaries.dart';
 import 'package:self_therapy_diaries/service/firebase_service.dart';
 
@@ -15,55 +16,31 @@ class DiariesScreen extends StatefulWidget {
 }
 
 class _DiariesScreenState extends State<DiariesScreen> {
+  String? name = '';
   @override
   void initState() {
     super.initState();
     getUserData();
+    getUserDisplayName();
+  }
+
+  void getUserDisplayName() {
+    name = GetIt.instance.get<FirebaseService>().getUserDisplayName();
   }
 
   void getUserData() async {
-    await GetIt.instance.get<FirebaseService>().getUserNameAndLastname();
-    setState(() {});
+    GetIt.instance.get<FirebaseService>().getUserAccountData();
+    //setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: DiariesDrawer(
-        UserOfDiaries.name + ' ' + UserOfDiaries.lastname,
+        name,
+        // UserOfDiaries.name + ' ' + UserOfDiaries.lastname,
       ),
       appBar: AppBar(
-        /*  actions: [
-          DropdownButton(
-            icon: Icon(
-              Icons.more_vert,
-              color: Theme.of(context).primaryIconTheme.color,
-            ),
-            items: [
-              DropdownMenuItem(
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.exit_to_app,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    const SizedBox(width: 6),
-                    Text(
-                      'Logout',
-                      style: TextStyle(color: Theme.of(context).primaryColor),
-                    ),
-                  ],
-                ),
-                value: 'logout',
-              ),
-            ],
-            onChanged: (itemIdentifier) {
-              if (itemIdentifier == 'logout') {
-                GetIt.instance.get<FirebaseService>().singOut();
-              }
-            },
-          ),
-        ], */
         title: const Text(
           'Therapy Diaries',
           style: TextStyle(color: Colors.white),
@@ -71,6 +48,7 @@ class _DiariesScreenState extends State<DiariesScreen> {
       ),
       body: Column(
         children: [
+          const SizedBox(height: 30),
           Container(
             padding: const EdgeInsets.all(10),
             child: const Center(
@@ -78,6 +56,7 @@ class _DiariesScreenState extends State<DiariesScreen> {
                 'Love your any state',
                 style: TextStyle(
                   fontSize: 20,
+                  color: MyApp.secondaryColor,
                 ),
               ),
             ),
@@ -90,6 +69,7 @@ class _DiariesScreenState extends State<DiariesScreen> {
                         diary.id,
                         diary.title,
                         diary.linearGradient,
+                        diary.icon,
                       ))
                   .toList(),
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(

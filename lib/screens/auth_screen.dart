@@ -32,7 +32,7 @@ class _AuthScreenState extends State<AuthScreen> {
       } else {
         _userId = await GetIt.instance
             .get<FirebaseService>()
-            .createUser(email, password);
+            .createUser(email, password, userName, userLastname);
         await GetIt.instance
             .get<FirebaseService>()
             .setCollectionUser(userName, userLastname, email, _userId);

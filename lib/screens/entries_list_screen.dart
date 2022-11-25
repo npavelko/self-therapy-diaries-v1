@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:self_therapy_diaries/diaries_drawer.dart';
+import 'package:self_therapy_diaries/main.dart';
 import 'package:self_therapy_diaries/model/user_of_diaries.dart';
 import 'package:self_therapy_diaries/screens/add_new_entry_screen.dart';
 import 'package:self_therapy_diaries/service/firebase_service.dart';
@@ -19,7 +20,7 @@ class _EntriesListScreenState extends State<EntriesListScreen> {
   void _addNewEnrty(
     BuildContext ctx,
     String selectedDiaryId,
-    selectedDiaryTitle,
+    String selectedDiaryTitle,
   ) {
     Navigator.pushNamed(ctx, AddNewEntrySceeen.routeName, arguments: {
       'id': selectedDiaryId,
@@ -34,7 +35,7 @@ class _EntriesListScreenState extends State<EntriesListScreen> {
         msg: "Deleted", // message
         toastLength: Toast.LENGTH_SHORT, // length
         gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.deepOrange, // location
+        backgroundColor: MyApp.secondaryColor, // location
       );
     });
   }
