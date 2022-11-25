@@ -14,6 +14,7 @@ class _AddNewEntrySceeenState extends State<AddNewEntrySceeen> {
   final _date = DateTime.now();
   var _title = '';
   var _entryText = '';
+  String formattedDate = '';
 
   String _formatter(DateTime dateTime) {
     DateFormat dateFormat = DateFormat.yMEd();
@@ -63,7 +64,6 @@ class _AddNewEntrySceeenState extends State<AddNewEntrySceeen> {
                   },
                 ),
                 const Padding(padding: EdgeInsets.only(bottom: 8)),
-                // add CalendarDatePicker(),
                 Text(
                   _formatter(_date),
                   style: const TextStyle(color: Colors.grey),

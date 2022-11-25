@@ -42,7 +42,8 @@ dependencies:
   intl: ^0.17.0
   fluttertoast: ^8.0.9
   get_it: ^7.2.0
-
+  babstrap_settings_screen: ^0.1.3
+  settings_ui: ^2.0.2
 
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:self_therapy_diaries/screens/field_settings_screen.dart';
+import 'package:self_therapy_diaries/screens/user_settings_screen.dart';
 
 import 'screens/diaries_screen.dart';
 import './screens/add_new_entry_screen.dart';
@@ -26,6 +28,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   static const Color colorMain = Color.fromRGBO(160, 108, 213, .9);
+  static const Color secondaryColor = Color.fromARGB(255, 230, 81, 36);
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +87,10 @@ class MyApp extends StatelessWidget {
             AddNewEntrySceeen.routeName: (ctx) => AddNewEntrySceeen(),
             ShowEditEntryScreen.routeName: (ctx) => ShowEditEntryScreen(),
             DiariesScreen.routeName: (ctx) => DiariesScreen(),
+            UserSettingsScreen.routeName: (ctx) => UserSettingsScreen(),
+            FieldSettingsScreen.routeName: (ctx) => FieldSettingsScreen(
+                  data: '',
+                ),
           });
     });
   }

@@ -6,8 +6,9 @@ class DiaryItem extends StatelessWidget {
   final String diaryId;
   final String diaryTitle;
   final LinearGradient diaryGradient;
+  final IconData iconData;
 
-  DiaryItem(this.diaryId, this.diaryTitle, this.diaryGradient);
+  DiaryItem(this.diaryId, this.diaryTitle, this.diaryGradient, this.iconData);
 
   void selectedDiary(BuildContext ctx) {
     Navigator.of(ctx).pushNamed(EntriesListScreen.routeName,
@@ -19,19 +20,27 @@ class DiaryItem extends StatelessWidget {
     return InkWell(
       onTap: () => selectedDiary(context),
       child: Card(
-        shadowColor: MyApp.colorMain,
+        shadowColor: MyApp.colorMain, //?
         //elevation: 15,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
         child: Container(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
+            verticalDirection: VerticalDirection.up,
             children: [
+              IconTheme(
+                data: const IconThemeData(
+                  color: Colors.white70,
+                  size: 70,
+                ),
+                child: Icon(iconData),
+              ),
               Text(
                 diaryTitle,
-                style: const TextStyle(color: Colors.black54, fontSize: 20),
+                style: const TextStyle(color: Colors.white, fontSize: 20),
               ),
             ],
           ),

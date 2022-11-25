@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:self_therapy_diaries/model/diaries.dart';
+import 'package:self_therapy_diaries/model/user_of_diaries.dart';
 import 'package:self_therapy_diaries/screens/entries_list_screen.dart';
+import 'package:self_therapy_diaries/screens/user_settings_screen.dart';
 import 'package:self_therapy_diaries/service/firebase_service.dart';
 
 class DiariesDrawer extends StatelessWidget {
-  final String _name;
+  String? _name;
+  String _email = '';
 
   DiariesDrawer(this._name);
 
@@ -39,12 +42,27 @@ class DiariesDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          DrawerHeader(
-            child: Text(
-              _name,
-              style: const TextStyle(
-                fontSize: 24,
+          UserAccountsDrawerHeader(
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Icon(
+                Icons.face,
+                color: Colors.grey.shade600,
+                size: 50,
               ),
+            ),
+            accountEmail: Text(
+              _name.toString(), /* UserOfDiaries.email */
+            ),
+            accountName: Row(
+              children: [
+                Text(
+                  UserOfDiaries.name + ' ' + UserOfDiaries.lastname,
+                  style: const TextStyle(
+                    fontSize: 24,
+                  ),
+                )
+              ],
             ),
             decoration: const BoxDecoration(
               color: Color.fromARGB(255, 230, 81, 36),
@@ -57,6 +75,19 @@ class DiariesDrawer extends StatelessWidget {
               itemBuilder: (ctx, index) => _createDiariesNavigation(context,
                   diaries[index].title, diaries[index].id, diaries[index].icon),
             ),
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text('Settings'),
+            leading: const Icon(Icons.settings),
+            onTap: () {
+              Navigator.of(context)
+                  .popAndPushNamed(UserSettingsScreen.routeName);
+              // .pushNamed(UserSettingsScreen.routeName, arguments: {});
+
+              // GetIt.instance.get<FirebaseService>().getUserAccountData();
+              //setState(() {});
+            },
           ),
           const Divider(),
           ListTile(
