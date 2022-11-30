@@ -17,6 +17,8 @@ class EntriesListScreen extends StatefulWidget {
 }
 
 class _EntriesListScreenState extends State<EntriesListScreen> {
+  var scaffoldKeyEntries = GlobalKey<ScaffoldState>();
+
   void _addNewEnrty(
     BuildContext ctx,
     String selectedDiaryId,
@@ -49,54 +51,70 @@ class _EntriesListScreenState extends State<EntriesListScreen> {
     String selectedDiaryTitle = args['diaryTitle'];
 
     return Scaffold(
+      key: scaffoldKeyEntries,
       drawer: DiariesDrawer(
         UserOfDiaries.name + ' ' + UserOfDiaries.lastname,
       ),
-      appBar: AppBar(
-        title: Text(
-          selectedDiaryTitle,
-          style: const TextStyle(color: Colors.black),
-        ),
-      ),
-      body: StreamBuilder(
-          // StreamBuilder needs stream and builder as arguments
-          stream: GetIt.instance
-              .get<FirebaseService>()
-              .getAllEnrtiesBySelectedDiaryId(
-                  selectedDiaryId, selectedDiaryTitle),
-          builder: (ctx, AsyncSnapshot<dynamic> streamSnapshots) {
-            if (streamSnapshots.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (!streamSnapshots.hasData) {
-              return const Center(
-                child: Text("There is no enties. Create first one!"),
-              );
-            }
+      body: SafeArea(
+        child: Stack(children: [
+          Positioned(
+            left: 5,
+            top: 0,
+            child: IconButton(
+              color: MyApp.colorMain,
+              iconSize: 30,
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                scaffoldKeyEntries.currentState!.openDrawer();
+              },
+            ),
+          ),
+          StreamBuilder(
+              // StreamBuilder needs stream and builder as arguments
+              stream: GetIt.instance
+                  .get<FirebaseService>()
+                  .getAllEnrtiesBySelectedDiaryId(
+                      selectedDiaryId, selectedDiaryTitle),
+              builder: (ctx, AsyncSnapshot<dynamic> streamSnapshots) {
+                if (streamSnapshots.connectionState ==
+                    ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (!streamSnapshots.hasData) {
+                  return const Center(
+                    child: Text("There is no enties. Create first one!"),
+                  );
+                }
 
-            final documents = streamSnapshots.data!.docs;
+                final documents = streamSnapshots.data!.docs;
 
-            return ListView.builder(
-              itemCount: documents.length,
-              itemBuilder: (ctx, index) => InkWell(
-                child: Container(
-                  padding: const EdgeInsets.all(9),
-                  child: EntryItem(
-                    documents[index].id,
-                    documents[index]['title'],
-                    documents[index]['date'],
-                    documents[index]['text'],
-                    index,
-                    documents[index]['diaryTitle'],
-                    _deleteEntry,
+                return Padding(
+                  padding: const EdgeInsets.only(
+                    top: 55,
                   ),
-                ),
-              ),
-            );
-            //if (!_sortDocuments.isNotEmpty) return Text('Haven\'t entries yet');
-          }),
+                  child: ListView.builder(
+                    itemCount: documents.length,
+                    itemBuilder: (ctx, index) => InkWell(
+                      child: Container(
+                        padding: const EdgeInsets.all(9),
+                        child: EntryItem(
+                          documents[index].id,
+                          documents[index]['title'],
+                          documents[index]['date'],
+                          documents[index]['text'],
+                          index,
+                          documents[index]['diaryTitle'],
+                          _deleteEntry,
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
+        ]),
+      ),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).accentColor,
           child: const Icon(Icons.add),
