@@ -16,6 +16,7 @@ class DiariesScreen extends StatefulWidget {
 }
 
 class _DiariesScreenState extends State<DiariesScreen> {
+  var scaffoldKeyDieries = GlobalKey<ScaffoldState>();
   String? name = '';
   @override
   void initState() {
@@ -36,52 +37,51 @@ class _DiariesScreenState extends State<DiariesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKeyDieries,
       drawer: DiariesDrawer(
-        name,
-        // UserOfDiaries.name + ' ' + UserOfDiaries.lastname,
+        //name,
+        UserOfDiaries.name
       ),
-      appBar: AppBar(
-        title: const Text(
-          'Therapy Diaries',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      body: Column(
-        children: [
-          const SizedBox(height: 30),
-          Container(
-            padding: const EdgeInsets.all(10),
-            child: const Center(
-              child: Text(
-                'Love your any state',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: MyApp.secondaryColor,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Positioned(
+              left: 5,
+              top: 0,
+              child: IconButton(
+                color: MyApp.colorMain,
+                iconSize: 30,
+                icon: const Icon(Icons.menu),
+                onPressed: () {
+                  scaffoldKeyDieries.currentState!.openDrawer();
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                top: 55,
+              ),
+              child: GridView(
+                padding: const EdgeInsets.all(15),
+                children: diaries
+                    .map((diary) => DiaryItem(
+                          diary.id,
+                          diary.title,
+                          diary.linearGradient,
+                          diary.icon,
+                        ))
+                    .toList(),
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 450,
+                  mainAxisExtent: 120,
+                  childAspectRatio: 4 / 2,
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: GridView(
-              padding: const EdgeInsets.all(15),
-              children: diaries
-                  .map((diary) => DiaryItem(
-                        diary.id,
-                        diary.title,
-                        diary.linearGradient,
-                        diary.icon,
-                      ))
-                  .toList(),
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 450,
-                mainAxisExtent: 120,
-                childAspectRatio: 4 / 2,
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
