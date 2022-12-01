@@ -37,7 +37,7 @@ class _EntriesListScreenState extends State<EntriesListScreen> {
         msg: "Deleted", // message
         toastLength: Toast.LENGTH_SHORT, // length
         gravity: ToastGravity.BOTTOM,
-        backgroundColor: MyApp.secondaryColor, // location
+        backgroundColor: MyApp.colorMain, // location
       );
     });
   }
@@ -116,8 +116,8 @@ class _EntriesListScreenState extends State<EntriesListScreen> {
         ]),
       ),
       floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).accentColor,
-          child: const Icon(Icons.add),
+          backgroundColor: MyApp.colorMain,
+          child: const Icon(Icons.add, color: MyApp.scaffoldColor,),
           elevation: 5,
           onPressed: () {
             _addNewEnrty(context, selectedDiaryId, selectedDiaryTitle);

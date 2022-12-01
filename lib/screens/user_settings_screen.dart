@@ -9,14 +9,22 @@ class UserSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         title: const Text('Settings'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SettingsList(
+          lightTheme: const SettingsThemeData(settingsListBackground: MyApp.scaffoldColor,
+          leadingIconsColor: MyApp.colorMain,
+          settingsTileTextColor:  MyApp.colorMain,
+          tileDescriptionTextColor: MyApp.colorMain,
+          ),
           sections: [
+
             SettingsSection(
+            
                 title: const Text(
                   'Common',
                   style: TextStyle(color: MyApp.colorMain),

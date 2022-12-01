@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:self_therapy_diaries/main.dart';
 
 import 'package:self_therapy_diaries/model/diaries.dart';
 import 'package:self_therapy_diaries/model/user_of_diaries.dart';
@@ -8,7 +9,7 @@ import 'package:self_therapy_diaries/screens/user_settings_screen.dart';
 import 'package:self_therapy_diaries/service/firebase_service.dart';
 
 class DiariesDrawer extends StatelessWidget {
-  String? _name;
+  String? _name = '';
   String _email = '';
 
   DiariesDrawer(this._name);
@@ -23,13 +24,16 @@ class DiariesDrawer extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(
-          title: Text(diaryTitle),
+          title: Text(diaryTitle, style: const TextStyle(color:  MyApp.colorMain),),
           onTap: () => Navigator.of(ctx)
               .pushReplacementNamed(EntriesListScreen.routeName, arguments: {
             'id': diaryId,
             'diaryTitle': diaryTitle,
           }),
-          leading: Icon(icon),
+          leading: Icon(
+            icon,
+            color: MyApp.colorMain.withOpacity(0.6),
+          ),
         ),
         const Divider(),
       ],
@@ -39,34 +43,46 @@ class DiariesDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: MyApp.scaffoldColor,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
           UserAccountsDrawerHeader(
-            currentAccountPicture: CircleAvatar(
-              backgroundColor: Colors.white,
+            currentAccountPictureSize: const Size.square(50),
+            currentAccountPicture: const CircleAvatar(
+              maxRadius: 20,
+              backgroundColor: MyApp.scaffoldColor,
               child: Icon(
-                Icons.face,
-                color: Colors.grey.shade600,
-                size: 50,
+                Icons.spa,
+                color: MyApp.colorMain,
+                size: 45,
               ),
             ),
             accountEmail: Text(
-              _name.toString(), /* UserOfDiaries.email */
+              UserOfDiaries.email,
+              style: const TextStyle(color: MyApp.scaffoldColor),
             ),
-            accountName: Row(
+            accountName: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  UserOfDiaries.name + ' ' + UserOfDiaries.lastname,
+                  UserOfDiaries.name,
                   style: const TextStyle(
-                    fontSize: 24,
+                    color: MyApp.scaffoldColor,
+                    fontSize: 20,
+                  ),
+                ),
+                Text(
+                  UserOfDiaries.lastname,
+                  style: const TextStyle(
+                    color: MyApp.scaffoldColor,
+                    fontSize: 20,
                   ),
                 )
               ],
             ),
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 230, 81, 36),
-            ),
+            decoration: const BoxDecoration(color: MyApp.colorMain),
           ),
           SizedBox(
             height: 300,
@@ -79,20 +95,25 @@ class DiariesDrawer extends StatelessWidget {
           const Divider(),
           ListTile(
             title: const Text('Settings'),
-            leading: const Icon(Icons.settings),
+            leading: Icon(
+              Icons.settings,
+              color: MyApp.colorMain.withOpacity(0.6),
+            ),
             onTap: () {
               Navigator.of(context)
                   .popAndPushNamed(UserSettingsScreen.routeName);
-              // .pushNamed(UserSettingsScreen.routeName, arguments: {});
 
-              // GetIt.instance.get<FirebaseService>().getUserAccountData();
+              //GetIt.instance.get<FirebaseService>().getUserAccountData();
               //setState(() {});
             },
           ),
           const Divider(),
           ListTile(
             title: const Text('Logout'),
-            leading: const Icon(Icons.logout),
+            leading: Icon(
+              Icons.logout,
+              color: MyApp.colorMain.withOpacity(0.6),
+            ),
             onTap: () => logout(),
           ),
           const Divider(),

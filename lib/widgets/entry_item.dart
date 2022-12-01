@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:self_therapy_diaries/main.dart';
 import 'package:self_therapy_diaries/screens/show_edit_entry_screen.dart';
 
 class EntryItem extends StatelessWidget {
@@ -57,6 +58,8 @@ class EntryItem extends StatelessWidget {
         //винести в оремий класс?
         borderRadius: BorderRadius.circular(15),
         child: Card(
+          shadowColor: MyApp.colorMain,
+          color: MyApp.scaffoldColor,
           margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
           elevation: 5,
           child: Padding(

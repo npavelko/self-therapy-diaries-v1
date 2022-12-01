@@ -5,10 +5,10 @@ import 'package:self_therapy_diaries/screens/entries_list_screen.dart';
 class DiaryItem extends StatelessWidget {
   final String diaryId;
   final String diaryTitle;
-  final LinearGradient diaryGradient;
   final IconData iconData;
 
-  DiaryItem(this.diaryId, this.diaryTitle, this.diaryGradient, this.iconData);
+  DiaryItem(
+      this.diaryId, this.diaryTitle, this.iconData);
 
   void selectedDiary(BuildContext ctx) {
     Navigator.of(ctx).pushNamed(EntriesListScreen.routeName,
@@ -20,8 +20,9 @@ class DiaryItem extends StatelessWidget {
     return InkWell(
       onTap: () => selectedDiary(context),
       child: Card(
+        color: MyApp.scaffoldColor,
         shadowColor: MyApp.colorMain, //?
-        //elevation: 15,
+        elevation: 5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
@@ -33,21 +34,20 @@ class DiaryItem extends StatelessWidget {
             children: [
               IconTheme(
                 data: const IconThemeData(
-                  color: Colors.white70,
+                  color: MyApp.colorMain,
                   size: 70,
                 ),
                 child: Icon(iconData),
               ),
               Text(
                 diaryTitle,
-                style: const TextStyle(color: Colors.white, fontSize: 20),
+                style: const TextStyle(color: MyApp.colorMain, fontSize: 20),
               ),
             ],
           ),
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            gradient: diaryGradient,
           ),
         ),
       ),

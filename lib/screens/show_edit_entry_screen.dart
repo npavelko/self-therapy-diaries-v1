@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:self_therapy_diaries/main.dart';
 import 'package:self_therapy_diaries/service/firebase_service.dart';
 
 class ShowEditEntryScreen extends StatelessWidget {
@@ -82,8 +83,11 @@ class ShowEditEntryScreen extends StatelessWidget {
             //return Text('Loading...');
           }),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.done),
-        backgroundColor: Theme.of(context).primaryColor,
+        child: const Icon(
+          Icons.done,
+          color: MyApp.scaffoldColor,
+        ),
+        backgroundColor: MyApp.colorMain,
         onPressed: () {
           if (_newTitleEntry.isEmpty) {
             _newTitleEntry = _nonChangedEntryTitle;

@@ -39,9 +39,8 @@ class _DiariesScreenState extends State<DiariesScreen> {
     return Scaffold(
       key: scaffoldKeyDieries,
       drawer: DiariesDrawer(
-        //name,
-        UserOfDiaries.name
-      ),
+          //name,
+          UserOfDiaries.name),
       body: SafeArea(
         child: Stack(
           children: [
@@ -59,7 +58,7 @@ class _DiariesScreenState extends State<DiariesScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(
-                top: 55,
+                top: 75,
               ),
               child: GridView(
                 padding: const EdgeInsets.all(15),
@@ -67,7 +66,6 @@ class _DiariesScreenState extends State<DiariesScreen> {
                     .map((diary) => DiaryItem(
                           diary.id,
                           diary.title,
-                          diary.linearGradient,
                           diary.icon,
                         ))
                     .toList(),
