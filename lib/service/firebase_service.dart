@@ -1,5 +1,3 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:self_therapy_diaries/model/user_of_diaries.dart';
@@ -9,8 +7,6 @@ final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
 class FirebaseService {
-  //static String userName = '';
-  //static String userLastName = '';
   String? _currentUserID = '';
 
   final String _collectionNotes = 'notes';
@@ -25,6 +21,7 @@ class FirebaseService {
         email: email, password: password);
     User? user = result.user;
     user!.updateDisplayName(username + ' ' + userLastname);
+    getUserAccountData();
     _currentUserID = user.uid;
 
     return user.uid;
@@ -35,6 +32,7 @@ class FirebaseService {
         email: email, password: password);
     User? user = result.user;
     _currentUserID = user!.uid;
+    getUserAccountData();
     return user.uid;
   }
 
@@ -85,7 +83,6 @@ class FirebaseService {
       UserOfDiaries.lastname = userMapData['userLastname'];
       UserOfDiaries.email = userMapData['email'];
     });
-    //return UserOfDiaries.name + ' ' + UserOfDiaries.lastname;
   }
 
   Future<void> saveEntry(
