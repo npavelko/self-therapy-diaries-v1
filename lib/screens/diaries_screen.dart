@@ -17,30 +17,12 @@ class DiariesScreen extends StatefulWidget {
 
 class _DiariesScreenState extends State<DiariesScreen> {
   var scaffoldKeyDieries = GlobalKey<ScaffoldState>();
-  String? name = '';
-  @override
-  void initState() {
-    super.initState();
-    getUserData();
-    getUserDisplayName();
-  }
-
-  void getUserDisplayName() {
-    name = GetIt.instance.get<FirebaseService>().getUserDisplayName();
-  }
-
-  void getUserData() async {
-    GetIt.instance.get<FirebaseService>().getUserAccountData();
-    //setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKeyDieries,
-      drawer: DiariesDrawer(
-          //name,
-          UserOfDiaries.name),
+      drawer: DiariesDrawer(),
       body: SafeArea(
         child: Stack(
           children: [

@@ -4,7 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:self_therapy_diaries/diaries_drawer.dart';
 import 'package:self_therapy_diaries/main.dart';
-import 'package:self_therapy_diaries/model/user_of_diaries.dart';
 import 'package:self_therapy_diaries/screens/add_new_entry_screen.dart';
 import 'package:self_therapy_diaries/service/firebase_service.dart';
 import 'package:self_therapy_diaries/widgets/entry_item.dart';
@@ -52,9 +51,7 @@ class _EntriesListScreenState extends State<EntriesListScreen> {
 
     return Scaffold(
       key: scaffoldKeyEntries,
-      drawer: DiariesDrawer(
-        UserOfDiaries.name + ' ' + UserOfDiaries.lastname,
-      ),
+      drawer: DiariesDrawer(),
       body: SafeArea(
         child: Stack(children: [
           Positioned(
@@ -117,7 +114,10 @@ class _EntriesListScreenState extends State<EntriesListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
           backgroundColor: MyApp.colorMain,
-          child: const Icon(Icons.add, color: MyApp.scaffoldColor,),
+          child: const Icon(
+            Icons.add,
+            color: MyApp.scaffoldColor,
+          ),
           elevation: 5,
           onPressed: () {
             _addNewEnrty(context, selectedDiaryId, selectedDiaryTitle);

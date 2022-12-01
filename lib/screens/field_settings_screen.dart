@@ -48,6 +48,7 @@ class _FieldSettingsScreenState extends State<FieldSettingsScreen> {
                   Fluttertoast.showToast(msg: 'New $_dataToUpdate saved');
                   break;
               }
+              GetIt.instance.get<FirebaseService>().getUserAccountData();
             },
             icon: const Icon(Icons.done),
           )
@@ -62,11 +63,9 @@ class _FieldSettingsScreenState extends State<FieldSettingsScreen> {
               _enteredText = value;
             },
             decoration: InputDecoration(
-            
               focusedBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: MyApp.colorMain, width: 1.0)),
               labelText: 'type new $_dataToUpdate here',
-              
             ),
             maxLines: 1,
           ),
