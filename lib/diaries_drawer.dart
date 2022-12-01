@@ -9,11 +9,7 @@ import 'package:self_therapy_diaries/screens/user_settings_screen.dart';
 import 'package:self_therapy_diaries/service/firebase_service.dart';
 
 class DiariesDrawer extends StatelessWidget {
-  String? _name = '';
-  String _email = '';
-
-  DiariesDrawer(this._name);
-
+  
   void logout() {
     GetIt.instance.get<FirebaseService>().singOut();
   }
@@ -24,7 +20,10 @@ class DiariesDrawer extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(
-          title: Text(diaryTitle, style: const TextStyle(color:  MyApp.colorMain),),
+          title: Text(
+            diaryTitle,
+            style: const TextStyle(color: MyApp.colorMain),
+          ),
           onTap: () => Navigator.of(ctx)
               .pushReplacementNamed(EntriesListScreen.routeName, arguments: {
             'id': diaryId,
@@ -102,9 +101,6 @@ class DiariesDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context)
                   .popAndPushNamed(UserSettingsScreen.routeName);
-
-              //GetIt.instance.get<FirebaseService>().getUserAccountData();
-              //setState(() {});
             },
           ),
           const Divider(),
