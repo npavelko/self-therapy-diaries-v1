@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_it/get_it.dart';
@@ -20,7 +18,6 @@ class _FieldSettingsScreenState extends State<FieldSettingsScreen> {
   Widget build(BuildContext context) {
     String _dataToUpdate = widget.data;
     String _enteredText = '';
-    String _label = 'New ' + _dataToUpdate;
 
     return Scaffold(
       appBar: AppBar(
@@ -51,9 +48,6 @@ class _FieldSettingsScreenState extends State<FieldSettingsScreen> {
                   Fluttertoast.showToast(msg: 'New $_dataToUpdate saved');
                   break;
               }
-
-              GetIt.instance.get<FirebaseService>().getUserAccountData();
-              setState(() {});
             },
             icon: const Icon(Icons.done),
           )
@@ -67,10 +61,8 @@ class _FieldSettingsScreenState extends State<FieldSettingsScreen> {
             onChanged: (value) {
               _enteredText = value;
             },
-            decoration:  InputDecoration(
-              enabledBorder: const UnderlineInputBorder(
-                  borderSide:
-                      BorderSide(color: MyApp.secondaryColor, width: 1.0)),
+            decoration: InputDecoration(
+            
               focusedBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: MyApp.colorMain, width: 1.0)),
               labelText: 'type new $_dataToUpdate here',
@@ -78,20 +70,6 @@ class _FieldSettingsScreenState extends State<FieldSettingsScreen> {
             ),
             maxLines: 1,
           ),
-          /* OutlinedButton(
-              clipBehavior: Clip.none,
-              autofocus: false,
-              child: Text('Save'),
-              onPressed: () {
-                setState(() {
-                  Fluttertoast.showToast(
-                    msg: "Saved", // message
-                    toastLength: Toast.LENGTH_SHORT, // length
-                    gravity: ToastGravity.BOTTOM,
-                    backgroundColor: MyApp.secondaryColor, // location
-                  );
-                });
-              }), */
         ]),
       ),
     );

@@ -27,8 +27,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  static const Color colorMain = Color.fromRGBO(160, 108, 213, .9);
-  static const Color secondaryColor = Color.fromARGB(255, 230, 81, 36);
+  static const Color colorMain = Color.fromARGB(228, 28, 60, 16);
+  static const Color scaffoldColor = Color.fromARGB(255, 242, 246, 221);
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +38,13 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
           title: 'Therapy Diaries',
           theme: ThemeData(
-            //colorScheme: ColorScheme  (primary: colorMain) , налаштувати
-            appBarTheme: AppBarTheme(color: colorMain),
+            scaffoldBackgroundColor: scaffoldColor,
+            appBarTheme: const AppBarTheme(color: colorMain),
             primaryColor: colorMain,
-            backgroundColor: colorMain,
-            accentColor: Color.fromARGB(255, 230, 81, 36),
             accentColorBrightness: Brightness.dark,
             fontFamily: 'Lato',
             textTheme: ThemeData.light().textTheme.copyWith(
-                  titleMedium: TextStyle(
+                  titleMedium: const TextStyle(
                     fontFamily: 'RobotoCondensed',
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
