@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:self_therapy_diaries/screens/diaries_screen.dart';
-import 'package:self_therapy_diaries/screens/entries_list_screen.dart';
 import 'package:self_therapy_diaries/screens/start_screen.dart';
 
 class ViewPageDiariesScreen extends StatelessWidget {
@@ -15,9 +14,8 @@ class ViewPageDiariesScreen extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       controller: pageContoller,
       children: [
-        StartPage(),
+        const StartPage(),
         DiariesScreen(),
-        //EntriesListScreen(),
       ],
     );
   }

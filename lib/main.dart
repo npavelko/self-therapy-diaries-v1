@@ -78,9 +78,9 @@ class MyApp extends StatelessWidget {
                   return SplashScreen();
                 }
                 if (userSnapshot.hasData) {
-                  return DiariesScreen();
+                  //return DiariesScreen();
+                  return ViewPageDiariesScreen();
                 }
-
                 return AuthScreen();
               }),
           routes: {
