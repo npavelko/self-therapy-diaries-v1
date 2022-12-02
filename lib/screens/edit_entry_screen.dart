@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:self_therapy_diaries/main.dart';
 import 'package:self_therapy_diaries/service/firebase_service.dart';
 
-class ShowEditEntryScreen extends StatelessWidget {
+class EditEntryScreen extends StatelessWidget {
   static const routeName = '/show-edit-entry-route';
   late final Function function;
 
@@ -64,11 +64,13 @@ class ShowEditEntryScreen extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                       ),
                       TextFormField(
+                      
                         initialValue: existEntry,
                         autofocus: true,
                         decoration: const InputDecoration(
+                          border: InputBorder.none,
                             hintText: 'Write  your feelings here...'),
-                        maxLines: 10,
+                        maxLines: 100,
                         onChanged: (value) {
                           _newTextEntry = value;
                         },
