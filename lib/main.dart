@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:self_therapy_diaries/screens/field_settings_screen.dart';
+import 'package:self_therapy_diaries/screens/view_page_diaries_screen.dart';
+import 'package:self_therapy_diaries/screens/start_screen.dart';
 import 'package:self_therapy_diaries/screens/user_settings_screen.dart';
 
 import 'screens/diaries_screen.dart';
@@ -76,7 +78,8 @@ class MyApp extends StatelessWidget {
                   return SplashScreen();
                 }
                 if (userSnapshot.hasData) {
-                  return DiariesScreen();
+                  //return DiariesScreen();
+                  return ViewPageDiariesScreen();
                 }
                 return AuthScreen();
               }),
@@ -89,6 +92,8 @@ class MyApp extends StatelessWidget {
             FieldSettingsScreen.routeName: (ctx) => FieldSettingsScreen(
                   data: '',
                 ),
+            ViewPageDiariesScreen.routeName: (ctx) => ViewPageDiariesScreen(),
+            StartPage.routeName: (ctx) => StartPage(),
           });
     });
   }
