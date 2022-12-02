@@ -12,7 +12,7 @@ import './screens/add_new_entry_screen.dart';
 import 'package:self_therapy_diaries/screens/auth_screen.dart';
 import 'package:self_therapy_diaries/screens/entries_list_screen.dart';
 import 'package:self_therapy_diaries/screens/splash_screen.dart';
-import 'package:self_therapy_diaries/screens/show_edit_entry_screen.dart';
+import 'package:self_therapy_diaries/screens/edit_entry_screen.dart';
 import 'package:self_therapy_diaries/service/firebase_service.dart';
 
 GetIt locator = GetIt.instance;
@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
           routes: {
             EntriesListScreen.routeName: (ctx) => EntriesListScreen(),
             AddNewEntrySceeen.routeName: (ctx) => AddNewEntrySceeen(),
-            ShowEditEntryScreen.routeName: (ctx) => ShowEditEntryScreen(),
+            EditEntryScreen.routeName: (ctx) => EditEntryScreen(),
             DiariesScreen.routeName: (ctx) => DiariesScreen(),
             UserSettingsScreen.routeName: (ctx) => UserSettingsScreen(),
             FieldSettingsScreen.routeName: (ctx) => FieldSettingsScreen(

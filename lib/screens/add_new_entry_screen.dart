@@ -71,27 +71,29 @@ class _AddNewEntrySceeenState extends State<AddNewEntrySceeen> {
                 Divider(
                   color: Theme.of(context).primaryColor,
                 ),
-                if (selectedDiaryTitle == 'Dream Diary')
-                  TextFormField(
-                    decoration: const InputDecoration(
-                        hintText: 'Write about what was your dream...'),
-                    maxLines: 40,
-                    onChanged: (value) {
-                      setState(() {
-                        _entryText = value;
-                      });
-                    },
-                  ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                      hintText: 'Write your feelings here...'),
-                  maxLines: 40,
-                  onChanged: (value) {
-                    setState(() {
-                      _entryText = value;
-                    });
-                  },
-                ),
+                selectedDiaryTitle == 'Dream Diary'
+                    ? TextFormField(
+                        decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Write about what was your dream...'),
+                        maxLines: 100,
+                        onChanged: (value) {
+                          setState(() {
+                            _entryText = value;
+                          });
+                        },
+                      )
+                    : TextFormField(
+                        decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Write your feelings here...'),
+                        maxLines: 100,
+                        onChanged: (value) {
+                          setState(() {
+                            _entryText = value;
+                          });
+                        },
+                      ),
               ],
             ),
           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:self_therapy_diaries/main.dart';
-import 'package:self_therapy_diaries/screens/show_edit_entry_screen.dart';
+import 'package:self_therapy_diaries/screens/edit_entry_screen.dart';
 
 class EntryItem extends StatelessWidget {
   final Function functionDelete;
@@ -25,13 +25,13 @@ class EntryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       //key: ValueKey(_idNote),
-      onTap: () => Navigator.pushNamed(context, ShowEditEntryScreen.routeName,
-          arguments: {
-            'index': _index.toString(), //?
-            'titleNote': _noteTitle, //rename entryTitle
-            'idNote': _idNote,
-            'diaryTitle': _diaryTitle,
-          }),
+      onTap: () =>
+          Navigator.pushNamed(context, EditEntryScreen.routeName, arguments: {
+        'index': _index.toString(), //?
+        'titleNote': _noteTitle, //rename entryTitle
+        'idNote': _idNote,
+        'diaryTitle': _diaryTitle,
+      }),
       onLongPress: (() => showDialog(
           context: context,
           builder: (ctx) => AlertDialog(
