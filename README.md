@@ -1,16 +1,15 @@
-# self_therapy_diaries
+## Flutter application self_therapy_diaries
 
-A new Flutter project.
+## About project
+This is a demo application, currently for Android Platform.
 
-## Getting Started
+The idea behind the app is to keep track and note of self feelings, to see how much good things in our lives and for further analysis in psychotherapy. 
 
-This project is a starting point for a Flutter application.
+## Technology Stack
+- User management & user metadata: firebase_auth
+- State management & data storages: cloud_firestore with get_it - service locator-based 
+- Hepler packages: email_validator, intl, fluttertoast
 
-A few resources to get you started if this is your first Flutter project:
+## Device
+The app tested on Pixel 3 (Android 12, API 31)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
